@@ -1,0 +1,89 @@
+Metadata-Version: 2.1
+Name: PasswordsSniffer
+Version: 0.0.1
+Summary: This module sniff username and password of unprotected protocols.
+Home-page: https://github.com/mauricelambert/PasswordsSniffer
+Author: Maurice Lambert
+Author-email: mauricelambert434@gmail.com
+Maintainer: Maurice Lambert
+Maintainer-email: mauricelambert434@gmail.com
+License: GPL-3.0 License
+Download-URL: https://mauricelambert.github.io/info/python/security/PasswordsSniffer.pyz
+Project-URL: Executable, https://mauricelambert.github.io/info/python/security/PasswordsSniffer.pyz
+Project-URL: Documentation, https://mauricelambert.github.io/info/python/security/PasswordsSniffer.html
+Description: # PasswordsSniffer
+        
+        ## Description
+        This module sniff username and password of unprotected protocols.
+        
+        ## Requirements
+        This package require:
+         - python3
+         - python3 Standard Library
+         - Scapy
+        
+        ## Installation
+        ```bash
+        pip install PasswordsSniffer
+        ```
+        
+        ## Usages
+        
+        ### Command line
+        
+        ```bash
+        PasswordsSniffer
+        python3 -m PasswordsSniffer
+        python3 PasswordsSniffer.pyz
+        ```
+        
+        ### Python script
+        
+        ```python
+        from PasswordsSniffer import *
+        telnet = SnifferTelnet()
+        telnet.start()
+        ```
+        
+        ```python
+        import PasswordsSniffer
+        from scapy.all import TCP
+        
+        class CustomSniffer(PasswordsSniffer.Sniffer):
+        
+            def __init__(self):
+                super().__init__()
+        
+                self.ports = [123]
+                self.protocol = TCP
+                self.strings = [b'Password: ']
+                self.regexs = [r'\w:\s?$'.encode()]
+                self.request_detection_ports = self.ports
+                self.response_detection_ports = self.ports
+        
+        sniffer = CustomSniffer()
+        sniffer.start()
+        ```
+        
+        ## Links
+         - [Pypi](https://pypi.org/project/PasswordsSniffer)
+         - [Github](https://github.com/mauricelambert/PasswordsSniffer)
+         - [Documentation](https://mauricelambert.github.io/info/python/security/PasswordsSniffer.html)
+         - [Python executable](https://mauricelambert.github.io/info/python/security/PasswordsSniffer.pyz)
+        
+        ## License
+        Licensed under the [GPL, version 3](https://www.gnu.org/licenses/).
+Keywords: PasswordsSniffer
+Platform: Windows
+Platform: Linux
+Platform: MacOS
+Classifier: Programming Language :: Python
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
