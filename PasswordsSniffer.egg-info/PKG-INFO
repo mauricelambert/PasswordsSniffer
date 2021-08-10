@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: PasswordsSniffer
-Version: 0.0.1
+Version: 0.0.2
 Summary: This module sniff username and password of unprotected protocols.
 Home-page: https://github.com/mauricelambert/PasswordsSniffer
 Author: Maurice Lambert
@@ -35,26 +35,38 @@ Description: # PasswordsSniffer
         PasswordsSniffer
         python3 -m PasswordsSniffer
         python3 PasswordsSniffer.pyz
+        
+        PasswordsSniffer test                        # test all available class
+        PasswordsSniffer -i "localhost"              # change iface
+        PasswordsSniffer --iface "localhost"         # change iface
+        PasswordsSniffer -P 2323                     # Add analysis on server response on port 2323
+        PasswordsSniffer --add-response-ports 2323   # Add analysis on server response on port 2323
+        PasswordsSniffer -p 8080                     # Add analysis on client request on port 8080
+        PasswordsSniffer --add-request-ports 8080    # Add analysis on client request on port 8080
+        PasswordsSniffer --add-string "Password: "   # Detect a packet if "Password: " is in TCP Raw content 
+        PasswordsSniffer -s "Password: "             # Detect a packet if "Password: " is in TCP Raw content
+        PasswordsSniffer -l 20                       # Change log level
+        PasswordsSniffer --log-level 20              # Change log level
         ```
         
         ### Python script
         
         ```python
         from PasswordsSniffer import *
-        telnet = SnifferTelnet()
-        telnet.start()
+        sniffer = SnifferAll()
+        sniffer.start()
         ```
         
         ```python
         import PasswordsSniffer
         from scapy.all import TCP
         
-        class CustomSniffer(PasswordsSniffer.Sniffer):
+        class CustomSniffer(PasswordsSniffer.SnifferTelnet):
         
             def __init__(self):
                 super().__init__()
         
-                self.ports = [123]
+                self.ports = [2323]
                 self.protocol = TCP
                 self.strings = [b'Password: ']
                 self.regexs = [r'\w:\s?$'.encode()]
@@ -77,13 +89,14 @@ Keywords: PasswordsSniffer
 Platform: Windows
 Platform: Linux
 Platform: MacOS
+Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python
+Classifier: Natural Language :: English
 Classifier: Development Status :: 5 - Production/Stable
-Classifier: Environment :: Console
 Classifier: Operating System :: MacOS :: MacOS X
 Classifier: Operating System :: Microsoft :: Windows
 Classifier: Operating System :: POSIX
-Classifier: Natural Language :: English
-Classifier: Programming Language :: Python :: 3.9
+Classifier: Environment :: Console
+Classifier: Topic :: System :: Networking
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown

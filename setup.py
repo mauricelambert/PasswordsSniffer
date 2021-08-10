@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="PasswordsSniffer",
-    version="0.0.1",
+    version="0.0.2",
 
     py_modules=["PasswordsSniffer"],
     
@@ -26,14 +26,15 @@ setup(
     include_package_data=True,
  
     classifiers=[
+        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python",
+        "Natural Language :: English",
         "Development Status :: 5 - Production/Stable",
-        "Environment :: Console",
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX',
-        "Natural Language :: English",
-        "Programming Language :: Python :: 3.9"
+        "Environment :: Console",
+        "Topic :: System :: Networking",
     ],
  
     keywords=["PasswordsSniffer"],

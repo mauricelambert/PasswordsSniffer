@@ -22,26 +22,38 @@ pip install PasswordsSniffer
 PasswordsSniffer
 python3 -m PasswordsSniffer
 python3 PasswordsSniffer.pyz
+
+PasswordsSniffer test                        # test all available class
+PasswordsSniffer -i "localhost"              # change iface
+PasswordsSniffer --iface "localhost"         # change iface
+PasswordsSniffer -P 2323                     # Add analysis on server response on port 2323
+PasswordsSniffer --add-response-ports 2323   # Add analysis on server response on port 2323
+PasswordsSniffer -p 8080                     # Add analysis on client request on port 8080
+PasswordsSniffer --add-request-ports 8080    # Add analysis on client request on port 8080
+PasswordsSniffer --add-string "Password: "   # Detect a packet if "Password: " is in TCP Raw content 
+PasswordsSniffer -s "Password: "             # Detect a packet if "Password: " is in TCP Raw content
+PasswordsSniffer -l 20                       # Change log level
+PasswordsSniffer --log-level 20              # Change log level
 ```
 
 ### Python script
 
 ```python
 from PasswordsSniffer import *
-telnet = SnifferTelnet()
-telnet.start()
+sniffer = SnifferAll()
+sniffer.start()
 ```
 
 ```python
 import PasswordsSniffer
 from scapy.all import TCP
 
-class CustomSniffer(PasswordsSniffer.Sniffer):
+class CustomSniffer(PasswordsSniffer.SnifferTelnet):
 
     def __init__(self):
         super().__init__()
 
-        self.ports = [123]
+        self.ports = [2323]
         self.protocol = TCP
         self.strings = [b'Password: ']
         self.regexs = [r'\w:\s?$'.encode()]

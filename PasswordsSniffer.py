@@ -25,11 +25,11 @@ This module sniff username and password of unprotected protocols.
 Protocols: FTP, Telnet, SMTP, POP3, IMAP4, HTTP, 
 SNMP, LDAP, SOCKS, MSSQL, PostgreSQL, IRC, OSPF, BFD, and STUN
 
-Version 0.0.1 available protocols: 
+Version 0.0.2 available protocols: 
 FTP, Telnet, SMTP, POP3, IMAP4, HTTP, IRC.
 """
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __author__ = "Maurice Lambert"
 __author_email__ = "mauricelambert434@gmail.com"
 __maintainer__ = "Maurice Lambert"
@@ -617,6 +617,14 @@ def port_to_int(ports: List[str]) -> None:
             sys.exit(1)
 
 
+def strings_to_bytes(strings: List[str]) -> None:
+
+    """This function change a list of string to a list of bytes."""
+
+    for i, string in strings:
+        strings[i] = string.encode("latin-1")
+
+
 def parse_args() -> Namespace:
 
     """This function parse command line arguments."""
@@ -683,11 +691,15 @@ def main() -> None:
 
     port_to_int(arguments.add_response_ports)
     port_to_int(arguments.add_request_ports)
+    strings_to_bytes(arguments.add_string)
+    strings_to_bytes(arguments.add_regex)
 
     sniffer = SnifferAll()
     sniffer.ports += arguments.add_response_ports + arguments.add_request_ports
     sniffer.request_detection_ports += arguments.add_request_ports
     sniffer.response_detection_ports += arguments.add_response_ports
+    sniffer.strings += arguments.add_string
+    sniffer.regexs += arguments.add_regex
 
     sniffer.logger.warning("[*] Start sniffing...")
     try:
